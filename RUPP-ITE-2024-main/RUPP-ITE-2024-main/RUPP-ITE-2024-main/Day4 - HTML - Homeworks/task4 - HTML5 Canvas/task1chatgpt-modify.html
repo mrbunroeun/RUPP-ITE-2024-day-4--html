@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Shapes</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Drawing Basic Shapes with HTML5 Canvas</h1>
+    <canvas id="myCanvas" width="500" height="400"></canvas>
+
+    <script>
+        // Get the canvas element and its drawing context
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        // Draw a rectangle
+        ctx.fillStyle = "#FF0000";  // Set the fill color to red
+        ctx.fillRect(50, 50, 150, 100);  // Draw the rectangle at (50, 50) with width 150 and height 100
+
+        // Draw a circle
+        ctx.beginPath();
+        ctx.arc(300, 150, 50, 0, 2 * Math.PI);  // Draw a circle at (300, 150) with radius 50
+        ctx.fillStyle = "#00FF00";  // Set the fill color to green
+        ctx.fill();
+
+        // Draw a line
+        ctx.beginPath();
+        ctx.moveTo(50, 300);  // Starting point of the line
+        ctx.lineTo(350, 300);  // End point of the line
+        ctx.strokeStyle = "#0000FF";  // Set the line color to blue
+        ctx.lineWidth = 5;  // Set the line width
+        ctx.stroke();
+    </script>
+
+</body>
+</html>

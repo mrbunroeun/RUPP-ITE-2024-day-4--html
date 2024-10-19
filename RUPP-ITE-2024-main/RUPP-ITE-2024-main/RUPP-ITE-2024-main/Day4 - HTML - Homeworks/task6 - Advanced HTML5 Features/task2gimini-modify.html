@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Theme Switcher</title>
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Theme Switcher</h1>
+    <button id="themeButton">Change Theme</button>
+
+    <script>
+        var themeButton = document.getElementById('themeButton');
+        var body = document.querySelector('body');
+
+        function saveTheme(theme) {
+            localStorage.setItem('theme', theme);
+        }
+
+        function loadTheme() {
+            var savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                body.style.backgroundColor = savedTheme;
+            }
+        }
+
+        themeButton.addEventListener('click', function() {
+            if (body.style.backgroundColor === 'black') {
+                body.style.backgroundColor = 'white';
+                saveTheme('white');
+            } else {
+                body.style.backgroundColor = 'black';
+                saveTheme('black');
+            }
+        });
+
+        loadTheme();
+    </script>
+</body>
+</html>

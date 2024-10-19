@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawing App</title>
+    <style>
+        canvas {
+            border: 2px solid black;
+            display: block;
+            margin: 20px auto;
+        }
+        .controls {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">Drawing App</h2>
+    <canvas id="drawingCanvas" width="600" height="400"></canvas>
+
+    <div class="controls">
+        <button onclick="clearCanvas()">Clear Canvas</button>
+        <label for="colorPicker">Color:</label>
+        <input type="color" id="colorPicker" value="#000000" onchange="changeColor(this.value)">
+        <label for="brushSize">Brush Size:</label>
+        <input type="range" id="brushSize" min="1" max="20" value="5" onchange="changeBrushSize(this.value)">
+    </div>
+
+    <script>
+        // Set up canvas and context
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+        let currentColor = '#000000';
+        let brushSize = 5;
+
+        // Start drawing when the mouse is pressed down
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        // Start drawing
+        function startDrawing(e) {
+            drawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        }
+
+        // Draw on the canvas
+        function draw(e) {
+            if (!drawing) return;
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = brushSize;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+        }
+
+        // Stop drawing when the mouse is released or out of the canvas
+        function stopDrawing() {
+            drawing = false;
+            ctx.closePath();
+        }
+
+        // Clear the canvas
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Change the brush color
+        function changeColor(color) {
+            currentColor = color;
+        }
+
+        // Change the brush size
+        function changeBrushSize(size) {
+            brushSize = size;
+        }
+    </script>
+</body>
+</html>

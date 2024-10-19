@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Media Controls</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .controls {
+            margin-top: 10px;
+        }
+        button, input[type="range"] {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Media with Custom Controls</h1>
+
+    <section>
+        <h3>Custom Video Player</h3>
+        <video id="myVideo" width="480" src="your-video-file.mp4"></video>
+        <div class="controls">
+            <button onclick="playVideo()">Play</button>
+            <button onclick="pauseVideo()">Pause</button>
+            <label for="volumeControl">Volume:</label>
+            <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="1" onchange="setVideoVolume()">
+        </div>
+    </section>
+
+    <section>
+        <h3>Custom Audio Player</h3>
+        <audio id="myAudio" src="your-audio-file.mp3"></audio>
+        <div class="controls">
+            <button onclick="playAudio()">Play</button>
+            <button onclick="pauseAudio()">Pause</button>
+            <label for="audioVolumeControl">Volume:</label>
+            <input type="range" id="audioVolumeControl" min="0" max="1" step="0.1" value="1" onchange="setAudioVolume()">
+        </div>
+    </section>
+
+    <script>
+        // Video controls
+        function playVideo() {
+            document.getElementById('myVideo').play();
+        }
+
+        function pauseVideo() {
+            document.getElementById('myVideo').pause();
+        }
+
+        function setVideoVolume() {
+            var volume = document.getElementById('volumeControl').value;
+            document.getElementById('myVideo').volume = volume;
+        }
+
+        // Audio controls
+        function playAudio() {
+            document.getElementById('myAudio').play();
+        }
+
+        function pauseAudio() {
+            document.getElementById('myAudio').pause();
+        }
+
+        function setAudioVolume() {
+            var volume = document.getElementById('audioVolumeControl').value;
+            document.getElementById('myAudio').volume = volume;
+        }
+    </script>
+
+</body>
+</html>

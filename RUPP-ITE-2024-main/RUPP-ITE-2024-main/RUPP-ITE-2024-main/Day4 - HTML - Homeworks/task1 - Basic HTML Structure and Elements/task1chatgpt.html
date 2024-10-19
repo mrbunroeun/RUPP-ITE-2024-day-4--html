@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Offline Webpage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+        }
+
+        section {
+            margin-top: 20px;
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Your Name</h1>
+    </header>
+    
+    <section>
+        <h2>About Me</h2>
+        <p>Hello! My name is [Your Name], and I am passionate about web development. This webpage is an example of how you can use service workers to make webpages available offline.</p>
+    </section>
+
+    <footer>
+        <p>Contact: your.email@example.com</p>
+    </footer>
+
+    <script>
+        // Register the service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+
+    <script>
+        // Service Worker file content (sw.js)
+
+        const CACHE_NAME = 'offline-cache-v1';
+        const URLS_TO_CACHE = [
+            '/',
+            '/index.html',
+            '/styles.css',
+            '/script.js'
+        ];
+
+        // Install event: Cache files during service worker installation
+        self.addEventListener('install', (event) => {
+            event.waitUntil(
+                caches.open(CACHE_NAME)
+                    .then((cache) => {
+                        console.log('Opened cache');
+                        return cache.addAll(URLS_TO_CACHE);
+                    })
+            );
+        });
+
+        // Fetch event: Serve files from cache when offline
+        self.addEventListener('fetch', (event) => {
+            event.respondWith(
+                caches.match(event.request)
+                    .then((response) => {
+                        return response || fetch(event.request);
+                    })
+            );
+        });
+
+        // Activate event: Clean up old caches if a new one is available
+        self.addEventListener('activate', (event) => {
+            const cacheWhitelist = [CACHE_NAME];
+            event.waitUntil(
+                caches.keys().then((cacheNames) => {
+                    return Promise.all(
+                        cacheNames.map((cacheName) => {
+                            if (cacheWhitelist.indexOf(cacheName) === -1) {
+                                return caches.delete(cacheName);
+                            }
+                        })
+                    );
+                })
+            );
+        });
+    </script>
+</body>
+</html>

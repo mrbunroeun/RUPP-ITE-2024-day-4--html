@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Color Selector</title>
+    <style>
+        body {
+            transition: background-color 0.5s;
+        }
+        .color-option {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            cursor: pointer;
+            border: 2px solid #000;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Select Your Theme Color</h1>
+    <div>
+        <div class="color-option" style="background-color: #ff5733;" onclick="changeColor('#ff5733')"></div>
+        <div class="color-option" style="background-color: #33ff57;" onclick="changeColor('#33ff57')"></div>
+        <div class="color-option" style="background-color: #3357ff;" onclick="changeColor('#3357ff')"></div>
+        <div class="color-option" style="background-color: #f1c40f;" onclick="changeColor('#f1c40f')"></div>
+        <div class="color-option" style="background-color: #9b59b6;" onclick="changeColor('#9b59b6')"></div>
+    </div>
+
+    <script>
+        // Function to change background color and save to localStorage
+        function changeColor(color) {
+            document.body.style.backgroundColor = color;
+            localStorage.setItem('bgColor', color);  // Save the selected color
+        }
+
+        // Load the saved background color from localStorage
+        window.onload = function() {
+            var savedColor = localStorage.getItem('bgColor');
+            if (savedColor) {
+                document.body.style.backgroundColor = savedColor;  // Apply saved color
+            }
+        }
+    </script>
+
+</body>
+</html>
